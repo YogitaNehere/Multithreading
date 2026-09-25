@@ -6,14 +6,19 @@ namespace Multithreading
 {
     internal class ThreadEx
     {
+        object obj = new object();
         internal void Display()
         {
-            for (int i=0; i< 5; i++)
+            lock (obj)
             {
-                Console.WriteLine($"ThreadEx.Display() method is running on thread {System.Threading.Thread.CurrentThread.ManagedThreadId}.");
-                System.Threading.Thread.Sleep(2000); // Simulate some work
+                for (int i = 1; i <= 5; i++)
+                {
+                    Console.WriteLine($"Thread Subprocess {i} {Thread.CurrentThread.Name} {Thread.CurrentThread.ManagedThreadId}.");
+                    Thread.Sleep(1000); // Simulate some work
+                }
             }
-            
+            Console.WriteLine("Thread completed.");
+
         }
     }
 }
